@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixLink | Technician Portal</title>
+    
+    <!-- This makes it act like an app -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007BFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>FixLink</h1>
+            <p>Spare Parts Comparison</p>
+        </header>
+
+        <section id="search-box">
+            <input type="text" id="searchInput" placeholder="Enter Model (e.g. HP G6, Samsung A12)">
+            <button onclick="runComparison()">Find Best Price</button>
+        </section>
+
+        <section id="comparison-results">
+            <!-- Results will be injected here by the Developer's code -->
+            <p class="placeholder-text">Enter a part name to see live comparisons.</p>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
