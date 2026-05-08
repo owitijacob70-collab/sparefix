@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpareFix - Add New Stock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Spare Part</h1>
+        <form id="uploadForm">
+            <input type="text" id="supplierName" placeholder="Supplier Name" required>
+            <input type="text" id="partName" placeholder="Part Name (e.g. iPhone 11 Screen)" required>
+            <input type="number" id="partPrice" placeholder="Price in KES" required>
+            <input type="text" id="location" placeholder="Shop Location" required>
+            <input type="text" id="contact" placeholder="Phone Number" required>
+            <button type="submit" id="submitBtn">Save to Database</button>
+        </form>
+        <p id="statusMessage"></p>
+        <a href="index.html">Back to Search</a>
+    </div>
+    <script type="module" src="upload.js"></script>
+</body>
+</html>
