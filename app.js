@@ -1,8 +1,9 @@
 // 1. Import the Firebase Libraries from the web
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+// Added 'orderBy' to the imports below to enable price sorting
+import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 2. PASTE YOUR PROJECT KEYS BELOW (Replace this block with yours)
+// 2. YOUR PROJECT KEYS (Kept exactly from your file)
 const firebaseConfig = {
   apiKey: "AIzaSyB0yjspvD7fUOpQxVjxwldxZjfyAjLnGwU",
   authDomain: "sparefix-37faa.firebaseapp.com",
@@ -19,23 +20,29 @@ const db = getFirestore(app);
 
 // 4. The Search Function
 async function runComparison() {
-    const searchTerm = document.getElementById('searchInput').value;
+    // Converts input to lowercase and removes extra spaces
+    const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
     const resultsContainer = document.getElementById('comparison-results');
     
     if (!searchTerm) {
-        alert("Please type a part name (e.g. iPhone 11 Screen)");
+        alert("Please type a part name (e.g. iphone 11 screen)");
         return;
     }
 
     resultsContainer.innerHTML = "<p>Searching SpareFix Database...</p>";
 
     try {
-        // Look for parts that MATCH the user's search
-        const q = query(collection(db, "listings"), where("part_name", "==", searchTerm));
+        // UPDATED QUERY: Now matches part_name AND sorts by price (lowest to highest)
+        const q = query(
+            collection(db, "listings"), 
+            where("part_name", "==", searchTerm),
+            orderBy("price", "asc")
+        );
+
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
-            resultsContainer.innerHTML = "<p>No suppliers found for that part. Try another name.</p>";
+            resultsContainer.innerHTML = "<p>No suppliers found for '" + searchTerm + "'. Ensure the part name is lowercase in your database.</p>";
             return;
         }
 
@@ -48,13 +55,16 @@ async function runComparison() {
                     <strong style="font-size: 1.1em;">${data.supplier}</strong><br>
                     <span style="color: #666;">Part: ${data.part_name}</span><br>
                     <span style="font-weight: bold; color: #d9534f; font-size: 1.2em;">KES ${data.price}</span><br>
+                    <span style="color: #555;">Location: ${data.location || 'Not Specified'}</span><br>
                     <button onclick="alert('M-Pesa Escrow coming soon!')" style="background:#28a745; color:white; border:none; padding:10px; width:100%; border-radius:5px; margin-top:10px; cursor:pointer;">Order Now</button>
+                // Add this line inside your results loop in app.js   
                 </div>
             `;
         });
     } catch (error) {
         console.error("Database Error:", error);
-        resultsContainer.innerHTML = "<p>Connection error. Check your internet.</p>";
+        // This error often appears if the Firebase Index is still building
+        resultsContainer.innerHTML = "<p>Connection error. If this is your first search, wait 2 minutes for the database to index.</p>";
     }
 }
 
