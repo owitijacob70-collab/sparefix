@@ -56,8 +56,7 @@ async function runComparison() {
                     <span style="color: #666;">Part: ${data.part_name}</span><br>
                     <span style="font-weight: bold; color: #d9534f; font-size: 1.2em;">KES ${data.price}</span><br>
                     <span style="color: #555;">Location: ${data.location || 'Not Specified'}</span><br>
-                    <button onclick="alert('M-Pesa Escrow coming soon!')" style="background:#28a745; color:white; border:none; padding:10px; width:100%; border-radius:5px; margin-top:10px; cursor:pointer;">Order Now</button>
-                // Add this line inside your results loop in app.js   
+                    <button onclick="alert('M-Pesa Escrow coming soon!')" style="background:#28a745; color:white; border:none; padding:10px; width:100%; border-radius:5px; margin-top:10px; cursor:pointer;">Order Now</button>  
                 </div>
             `;
         });
