@@ -48,15 +48,28 @@ async function runComparison() {
 
         resultsContainer.innerHTML = ""; // Clear loader
         
-        querySnapshot.forEach((doc) => {
+       querySnapshot.forEach((doc) => {
             const data = doc.data();
             resultsContainer.innerHTML += `
                 <div class="supplier-card" style="border-left: 5px solid #007BFF; background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                     <strong style="font-size: 1.1em;">${data.supplier}</strong><br>
                     <span style="color: #666;">Part: ${data.part_name}</span><br>
                     <span style="font-weight: bold; color: #d9534f; font-size: 1.2em;">KES ${data.price}</span><br>
-                    <span style="color: #555;">Location: ${data.location || 'Not Specified'}</span><br>
-                    <button onclick="alert('M-Pesa Escrow coming soon!')" style="background:#28a745; color:white; border:none; padding:10px; width:100%; border-radius:5px; margin-top:10px; cursor:pointer;">Order Now</button>  
+                    <span style="color: #555; font-size: 0.9em;">📍 Location: ${data.location || 'Nairobi'}</span><br>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="tel:${data.contact}" style="flex: 1; text-decoration: none;">
+                            <button style="background:#007BFF; color:white; border:none; padding:12px 5px; width:100%; border-radius:5px; cursor:pointer; font-weight:bold; font-size: 0.8em;">
+                                📞 Call
+                            </button>
+                        </a>
+                        
+                        <a href="https://wa.me/${data.contact}?text=Hi, I saw your ${data.part_name} on SpareFix. Is it available?" style="flex: 1; text-decoration: none;">
+                            <button style="background:#25D366; color:white; border:none; padding:12px 5px; width:100%; border-radius:5px; cursor:pointer; font-weight:bold; font-size: 0.8em;">
+                                💬 WhatsApp
+                            </button>
+                        </a>
+                    </div>
                 </div>
             `;
         });
